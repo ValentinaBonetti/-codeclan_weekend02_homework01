@@ -13,6 +13,7 @@ class Room
     for guest in list_of_guests
       @list_of_guests_and_bills.store(guest, 0)
     end
+    @drink_price = 3
   end
 
   def checkin_guest(guest)
@@ -32,6 +33,16 @@ class Room
   def checkout_guest(guest)
     if @list_of_guests_and_bills.keys.include?(guest)
       return {guest => @list_of_guests_and_bills[guest]}
+    else
+      return false
+    end
+  end
+
+  def serve_drink_to_guest(guest)
+    if (@list_of_guests_and_bills.keys.include?(guest) && guest.wallet >= @drink_price)
+      guest.wallet -= @drink_price
+      @list_of_guests_and_bills[guest] += @drink_price
+      return true
     else
       return false
     end

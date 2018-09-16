@@ -55,5 +55,17 @@ class TestRoom < Minitest::Test
     assert_equal(expected_song,actual_song)
   end
 
+  def test_serve_drink_to_guest
+    wallet_before = @emily.wallet
+    bill_before = @room1.list_of_guests_and_bills[@emily]
+    @room1.serve_drink_to_guest(@emily)
+    expected_wallet_change = 3
+    actual_wallet_change = wallet_before - @emily.wallet
+    assert_equal(expected_wallet_change,actual_wallet_change)
+    expected_bill_change = 3
+    actual_bill_change = @room1.list_of_guests_and_bills[@emily] - bill_before
+    assert_equal(expected_bill_change,actual_bill_change)
+  end
+
 
 end
